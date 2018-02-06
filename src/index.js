@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 // Components
-import BookPage from './components/BookPage'
+import Mpg from './components/Mpg'
 
 
 ReactDOM.render(
-  <BookPage />,
+  <Mpg />,
   document.getElementById('app')
 );

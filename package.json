@@ -1,5 +1,5 @@
 {
-  "name": "book-list",
+  "name": "mpg",
   "version": "1.0.0",
   "main": "./src/entry.js",
   "license": "MIT",
@@ -9,7 +9,6 @@
     "dev": "webpack-dev-server --hot --history-api-fallback --open"
   },
   "dependencies": {
-    "axios": "^0.17.1",
     "compression": "^1.6.2",
     "es6-promise": "^4.0.5",
     "express": "^4.13.4",
