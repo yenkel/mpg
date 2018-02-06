@@ -29,6 +29,7 @@ const rules = [
   },
   {
     test: /\.css$/,
+    include: [imagesPath, sourcePath],
     use: ExtractTextPlugin.extract({
       fallback: "style-loader",
       use: "css-loader"
